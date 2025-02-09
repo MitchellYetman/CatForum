@@ -16,6 +16,9 @@
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Content)
             </th>
             <th>
@@ -29,7 +32,11 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
+            string imageUrl = Url.Content("/photos/" + item.ImageFilename);
         <tr>
+            <td>
+                <img src="@imageUrl" width="80" height="55" alt="thumbnail for @item.DiscussionId"/>
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
