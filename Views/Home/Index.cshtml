@@ -1,8 +1,34 @@
-﻿@{
+﻿@model List<CatForum.Models.Discussion>
+
+
+@{
     ViewData["Title"] = "Home Page";
+    var discussionComments = ViewBag.DiscussionComments;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1 class="fw-bold">CatForum</h1>
+
+<div class="masonry-grid">
+    @foreach (var item in Model){
+        string imageUrl = Url.Content("/photos/" + item.ImageFilename);
+
+        <div class="masonry-grid-item mb-4 mt-3 discussionCard d-flex">
+            <div class="w-75">
+                <a href="@Url.Action("GetDiscussion", "Home")" class="text-decoration-none">
+                    <h3>@item.Title</h3>
+                </a>
+                <div class="d-flex">
+                    <div class="me-3"># of comments: @discussionComments[item.DiscussionId]</div>
+                    <div>Created at: @item.CreateDate</div>
+                </div>
+            </div>
+            <div class="ms-auto">
+                <a href="@Url.Action("Details", "Discussions", new { id = item.DiscussionId })">
+                    <img src="@imageUrl" class="img-fluid" height="75" width="105" alt="thumbnail for discussion with id @item.DiscussionId" />
+                </a>
+            </div>
+           
+            
+        </div>
+    }
 </div>
