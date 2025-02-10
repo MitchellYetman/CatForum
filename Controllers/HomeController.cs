@@ -17,20 +17,10 @@ namespace CatForum.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var discussions = await _context.Discussion.ToListAsync();
+            var discussions = await _context.Discussion.Include(d => d.Comments).ToListAsync();
 
             //sort syntax from ChatGPT
             discussions.Sort((x, y) => y.CreateDate.CompareTo(x.CreateDate));
-
-            //syntax for dictionary and fetch, as well as idea to use dictionary, from ChatGPT. my original thought was to pass an object that held DiscussionId's and comment counts
-            var discussionComments = new Dictionary<int, int>();
-            foreach(var d in discussions)
-            {
-                var commentCount = await _context.Comment.Where(c => c.DiscussionId == d.DiscussionId).CountAsync();
-                discussionComments.Add(d.DiscussionId, commentCount);
-            }
-
-            ViewBag.DiscussionComments = discussionComments;
 
             return View(discussions);
         }
@@ -42,14 +32,13 @@ namespace CatForum.Controllers
 
         public async Task<IActionResult> GetDiscussion(int? id)
         {
-            var discussion = await _context.Discussion.FirstOrDefaultAsync(d => d.DiscussionId == id);
+            var discussion = await _context.Discussion.Include(d => d.Comments).FirstOrDefaultAsync(d => d.DiscussionId == id);
 
-            if (discussion != null) {
-                var comments = await _context.Comment.Where(c => c.DiscussionId == discussion.DiscussionId).ToListAsync();
-                comments.Sort((x, y) => y.CreateDate.CompareTo(x.CreateDate));
-                ViewBag.Comments = comments;
-            }            
-            
+            if (discussion != null && discussion.Comments != null)
+            {
+                discussion.Comments.Sort((x, y) => y.CreateDate.CompareTo(x.CreateDate));
+            }
+
             return View(discussion);
         }
 

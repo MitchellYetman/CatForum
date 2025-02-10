@@ -3,7 +3,6 @@
 
 @{
     ViewData["Title"] = "Home Page";
-    var discussionComments = ViewBag.DiscussionComments;
 }
 
 <h1 class="fw-bold">CatForum</h1>
@@ -19,7 +18,12 @@
                     <h3>@item.Title</h3>
                 </a>
                 <div class="d-flex">
-                    <div class="me-3"># of comments: @discussionComments[item.DiscussionId]</div>
+                    @* <div class="me-3"># of comments: @discussionComments[item.DiscussionId]</div> *@
+                    @if(@item.Comments != null){
+                        <div class="me-3"># of comments: @item.Comments.Count</div>
+                    }else{
+                        <div class="me-3"># of comments: 0</div>
+                    }
                     <div>Created at: @item.CreateDate</div>
                 </div>
             </div>
