@@ -1,5 +1,21 @@
-﻿
+﻿@model CatForum.Models.Discussion
+
 @{
+	var comments = ViewBag.Comments;
+	string imageUrl = Url.Content("/photos/" + Model.ImageFilename);
 }
 
-<h1>This is the get discussion page</h1>
+<h2>@Model.Title</h2>
+<hr class="my-3" />
+<img src="@imageUrl" width="250" height="180" alt="alt for photo in discussion @Model.DiscussionId" class="mb-3"/>
+<p>@Model.Content</p>
+<hr class="border-2"/>
+<div class="d-flex">
+<h5 class="me-3">Comments:</h5>
+<button onclick="window.location.href='@Url.Action("Create", "Comments", new {id = Model.DiscussionId})'" class="mb-3 ms-auto">Add new comment</button>
+</div>
+<div>
+	@foreach (var comment in comments){
+		<div class="border mb-3">@comment.Content</div>
+	}
+</div>

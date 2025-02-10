@@ -40,9 +40,17 @@ namespace CatForum.Controllers
             return View();        
         }
 
-        public IActionResult GetDiscussion()
+        public async Task<IActionResult> GetDiscussion(int? id)
         {
-            return View();
+            var discussion = await _context.Discussion.FirstOrDefaultAsync(d => d.DiscussionId == id);
+
+            if (discussion != null) {
+                var comments = await _context.Comment.Where(c => c.DiscussionId == discussion.DiscussionId).ToListAsync();
+                comments.Sort((x, y) => y.CreateDate.CompareTo(x.CreateDate));
+                ViewBag.Comments = comments;
+            }            
+            
+            return View(discussion);
         }
 
 

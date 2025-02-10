@@ -29,9 +29,12 @@ namespace CatForum.Controllers
 
 
         // GET: Comments/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
-            ViewData["DiscussionId"] = new SelectList(_context.Discussion, "DiscussionId", "DiscussionId");
+            if (id != null)
+            {
+                ViewBag.DiscussionId = id;
+            }
             return View();
         }
 
@@ -40,15 +43,16 @@ namespace CatForum.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CommentId,Content,CreateDate,DiscussionId")] Comment comment)
+        public async Task<IActionResult> Create([Bind("Content, DiscussionId")] Comment comment)
         {
             if (ModelState.IsValid)
-            {
+            { 
+                comment.CreateDate = DateTime.Now;
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Discussions");
+                return RedirectToAction("GetDiscussion", "Home", new {id = comment.DiscussionId});
             }
-            ViewData["DiscussionId"] = new SelectList(_context.Discussion, "DiscussionId", "DiscussionId", comment.DiscussionId);
+
             return View(comment);
         }     
 
