@@ -38,3 +38,9 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.thumbnail {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}

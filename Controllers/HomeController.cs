@@ -17,11 +17,8 @@ namespace CatForum.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var discussions = await _context.Discussion.Include(d => d.Comments).ToListAsync();
-
-            //sort syntax from ChatGPT
-            discussions.Sort((x, y) => y.CreateDate.CompareTo(x.CreateDate));
-
+            //add orderby here and get rid of sort
+            var discussions = await _context.Discussion.Include(d => d.Comments).OrderByDescending(d => d.CreateDate).ToListAsync();
             return View(discussions);
         }
 

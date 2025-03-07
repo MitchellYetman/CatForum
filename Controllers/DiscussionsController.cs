@@ -55,8 +55,15 @@ namespace CatForum.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Content,ImageFile")] Discussion discussion)
-        {
-            discussion.ImageFilename = Guid.NewGuid().ToString() + Path.GetExtension(discussion.ImageFile?.FileName);
+        { 
+            if (discussion.ImageFile != null)
+            {
+                discussion.ImageFilename = Guid.NewGuid().ToString() + Path.GetExtension(discussion.ImageFile?.FileName);
+            }
+            else
+            {
+                discussion.ImageFilename = "No image provided";
+            }
             discussion.CreateDate = DateTime.Now;
 
             if (ModelState.IsValid)
