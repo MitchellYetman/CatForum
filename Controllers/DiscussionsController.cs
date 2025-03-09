@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CatForum.Data;
 using CatForum.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace CatForum.Controllers
 {
@@ -15,10 +16,12 @@ namespace CatForum.Controllers
     public class DiscussionsController : Controller
     {
         private readonly CatForumContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public DiscussionsController(CatForumContext context)
+        public DiscussionsController(CatForumContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Discussions
@@ -67,6 +70,7 @@ namespace CatForum.Controllers
                 discussion.ImageFilename = "No image provided";
             }
             discussion.CreateDate = DateTime.Now;
+            discussion.ApplicationUserId = _userManager.GetUserId(User);
 
             if (ModelState.IsValid)
             {

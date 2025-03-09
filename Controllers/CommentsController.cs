@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CatForum.Data;
 using CatForum.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace CatForum.Controllers
 {
@@ -15,10 +16,12 @@ namespace CatForum.Controllers
     public class CommentsController : Controller
     {
         private readonly CatForumContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CommentsController(CatForumContext context)
+        public CommentsController(CatForumContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         //REMOVED SECTIONS
@@ -50,6 +53,7 @@ namespace CatForum.Controllers
             if (ModelState.IsValid)
             { 
                 comment.CreateDate = DateTime.Now;
+                comment.ApplicationUserId = _userManager.GetUserId(User);
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("GetDiscussion", "Home", new {id = comment.DiscussionId});
