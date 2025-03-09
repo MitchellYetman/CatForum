@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CatForum.Data;
 using CatForum.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CatForum.Controllers
 {
+    [Authorize]
     public class CommentsController : Controller
     {
         private readonly CatForumContext _context;

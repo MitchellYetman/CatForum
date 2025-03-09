@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using CatForum.Data;
 
 namespace CatForum.Models
 {
@@ -17,6 +18,11 @@ namespace CatForum.Models
 
         // Navigation property
         public List<Comment>? Comments { get; set; }
-        
+
+        public string ApplicationUserId { get; set; } = string.Empty;
+        public ApplicationUser? ApplicationUser { get; set; }
+
+
+
     }
 }
