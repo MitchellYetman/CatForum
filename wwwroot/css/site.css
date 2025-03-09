@@ -40,7 +40,13 @@ body {
 }
 
 .thumbnail {
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: auto;
+    border-radius: 50%;
+}
+
+.profile-thumb {
+    width: 80px;
+    height: auto;
     border-radius: 50%;
 }
