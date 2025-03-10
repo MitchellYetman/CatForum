@@ -1,8 +1,0 @@
-﻿@model CatForum.Data.ApplicationUser
-
-@{
-	string profilePic = Url.Content("/profile_img/" + Model.ImageFilename);
-}
-
-<img src="/profile_img/@Model.ImageFilename" class="discussion-thumb" />
-<p>@Model.Name</p>

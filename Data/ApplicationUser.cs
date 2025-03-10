@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CatForum.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace CatForum.Data
@@ -16,5 +17,8 @@ namespace CatForum.Data
         [NotMapped]
         [Display(Name = "Photo")]
         public IFormFile? ImageFile;
+
+        public List<Comment>? Comments { get; set; }
+        public List<Discussion>? Discussions { get; set; }
     }
 }

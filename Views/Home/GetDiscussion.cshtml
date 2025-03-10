@@ -16,7 +16,7 @@
 @if (@Model.Comments != null){
 	@foreach(var comment in Model.Comments){
 		<div class="border mb-3">
-			<a href="@Url.Action("GetUserProfile", "Home", new {id = comment.ApplicationUser.Id})" class="text-decoration-none">
+			<a href="@Url.Action("Profile", "Home", new {id = comment.ApplicationUser.Id})" class="text-decoration-none">
 			<div>Commenter: @comment.ApplicationUser.Name</div>
 			</a>
 			<div>@comment.Content</div>

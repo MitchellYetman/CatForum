@@ -29,8 +29,14 @@ namespace CatForum.Data
             // Configure the relationship between Comment and ApplicationUser (if needed)
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.ApplicationUser)
-                .WithMany() // Assuming one-to-many relation with ApplicationUser
+                .WithMany(u => u.Comments) // Assuming one-to-many relation with ApplicationUser
                 .HasForeignKey(c => c.ApplicationUserId)
+                .OnDelete(DeleteBehavior.Restrict);  // Prevent cascading delete
+
+            modelBuilder.Entity<Discussion>()
+                .HasOne(d => d.ApplicationUser)
+                .WithMany(u => u.Discussions) // Assuming one-to-many relation with ApplicationUser
+                .HasForeignKey(d => d.ApplicationUserId)
                 .OnDelete(DeleteBehavior.Restrict);  // Prevent cascading delete
         }
 

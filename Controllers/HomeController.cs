@@ -39,9 +39,9 @@ namespace CatForum.Controllers
             return View(discussion);
         }
 
-        public async Task<IActionResult> GetUserProfile(string? id)
+        public async Task<IActionResult> Profile(string? id)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _context.Users.Include(u => u.Discussions).FirstOrDefaultAsync(u => u.Id == id);
 
             return View(user);
 

@@ -1,0 +1,20 @@
+﻿@model CatForum.Data.ApplicationUser
+
+@{
+	string profilePic = Url.Content("/profile_img/" + Model.ImageFilename);
+}
+
+<img src="@profilePic" class="profile-thumb" />
+<p>@Model.Name</p>
+<p>@Model.Location</p>
+
+@foreach (var discussion in @Model.Discussions){
+	<div class="border mb-3">
+		@* <a href="@Url.Action("Profile", "Home", new {id = discussion.ApplicationUser.Id})" class="text-decoration-none"> *@
+			@* <div>Commenter: @discussion.ApplicationUser.Name</div> *@
+		<a href="@Url.Action("GetDiscussion", "Home", new {id = discussion.DiscussionId})" class="text-decoration-none">
+			<h2>@discussion.Title</h2>
+		</a>
+		<div>@discussion.Content</div>
+	</div>
+}
