@@ -24,7 +24,7 @@ namespace CatForum.Data
                 .HasOne(c => c.Discussion)
                 .WithMany(d => d.Comments)
                 .HasForeignKey(c => c.DiscussionId)
-                .OnDelete(DeleteBehavior.Restrict);  // Prevent cascading delete
+                .OnDelete(DeleteBehavior.Cascade);  // Prevent cascading delete
 
             // Configure the relationship between Comment and ApplicationUser (if needed)
             modelBuilder.Entity<Comment>()

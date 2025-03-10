@@ -60,14 +60,10 @@ namespace CatForum.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Content,ImageFile")] Discussion discussion)
-        { 
+        {
             if (discussion.ImageFile != null)
             {
                 discussion.ImageFilename = Guid.NewGuid().ToString() + Path.GetExtension(discussion.ImageFile?.FileName);
-            }
-            else
-            {
-                discussion.ImageFilename = "No image provided";
             }
             discussion.CreateDate = DateTime.Now;
             discussion.ApplicationUserId = _userManager.GetUserId(User);
@@ -113,7 +109,7 @@ namespace CatForum.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DiscussionId,Title,Content,ImageFilename,CreateDate")] Discussion discussion)
+        public async Task<IActionResult> Edit(int id, [Bind("DiscussionId,Title,Content,ImageFilename,CreateDate,ApplicationUserId")] Discussion discussion)
         {
             if (id != discussion.DiscussionId)
             {

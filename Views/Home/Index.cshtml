@@ -10,8 +10,6 @@
 
 <div class="masonry-grid">
     @foreach (var item in Model){
-        string imageUrl = Url.Content("/photos/" + item.ImageFilename);
-
         <div class="masonry-grid-item mb-4 mt-3 discussionCard d-flex">
             <div class="w-75">
                 <a href="@Url.Action("GetDiscussion", "Home", new {id = item.DiscussionId})" class="text-decoration-none">
@@ -29,9 +27,16 @@
                 <div>Thread owner: @item.ApplicationUser.Name</div>
                 </a>
             </div>
-            <div class="ms-auto">
-                    <img src="@imageUrl" class="img-fluid" height="75" width="105" alt="thumbnail for discussion with id @item.DiscussionId" />                
-            </div>
+            @if(item.ImageFilename != ""){
+                string imageUrl = Url.Content("/photos/" + item.ImageFilename);
+                <div class="ms-auto">
+                    <img src="@imageUrl" class="img-fluid" height="75" width="105" alt="thumbnail for discussion with id @item.DiscussionId" />
+                </div>
+            }else{
+                <div class="ms-auto">
+                    <img src="/photos/no_img_found.jpeg" class="img-fluid" width="105" height="75" alt="thumbnail for @item.DiscussionId" />
+                </div>
+            }
            
             
         </div>

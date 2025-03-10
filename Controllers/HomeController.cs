@@ -29,7 +29,7 @@ namespace CatForum.Controllers
 
         public async Task<IActionResult> GetDiscussion(int? id)
         {
-            var discussion = await _context.Discussion.Include(d => d.Comments).Include(d => d.ApplicationUser).FirstOrDefaultAsync(d => d.DiscussionId == id);
+            var discussion = await _context.Discussion.Include(d => d.Comments).ThenInclude(c => c.ApplicationUser).Include(d => d.ApplicationUser).FirstOrDefaultAsync(d => d.DiscussionId == id);
 
             if (discussion != null && discussion.Comments != null)
             {
@@ -41,7 +41,7 @@ namespace CatForum.Controllers
 
         public async Task<IActionResult> Profile(string? id)
         {
-            var user = await _context.Users.Include(u => u.Discussions).FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _context.Users.Include(u => u.Discussions).Include(d => d.Comments).FirstOrDefaultAsync(u => u.Id == id);
 
             return View(user);
 

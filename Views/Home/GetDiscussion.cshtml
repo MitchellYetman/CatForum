@@ -4,23 +4,30 @@
 	string imageUrl = Url.Content("/photos/" + Model.ImageFilename);
 }
 
-<img src="/profile_img/@Model.ApplicationUser.ImageFilename" class="discussion-thumb" />
-<p>@Model.ApplicationUser.Name</p>
+	<a href="@Url.Action("Profile", "Home", new {id = Model.ApplicationUser.Id})" class="text-decoration-none">
+		<div class="d-flex align-items-center">
+			<img src="/profile_img/@Model.ApplicationUser.ImageFilename" class="profile-details-thumb" />
+			<p>@Model.ApplicationUser.Name</p>
+		</div>
+	</a>
 
-<h2>@Model.Title</h2>
-<hr class="my-3" />
-<img src="@imageUrl" width="250" height="180" alt="alt for photo in discussion @Model.DiscussionId" class="mb-3"/>
-<p>@Model.Content</p>
-<hr class="border-2"/>
-<h5 >Comments:</h5>
-@if (@Model.Comments != null){
-	@foreach(var comment in Model.Comments){
-		<div class="border mb-3">
-			<a href="@Url.Action("Profile", "Home", new {id = comment.ApplicationUser.Id})" class="text-decoration-none">
-			<div>Commenter: @comment.ApplicationUser.Name</div>
-			</a>
-			<div>@comment.Content</div>
-			</div>
-	}
-}
-<button onclick="window.location.href='@Url.Action("Create", "Comments", new {id = Model.DiscussionId})'" class="mb-3 ms-auto">Add new comment</button>
+	<div class="ms-5 ps-5">
+		<h2>@Model.Title</h2>
+		<hr class="my-3" />
+		<img src="@imageUrl" width="250" height="180" alt="alt for photo in discussion @Model.DiscussionId" class="mb-3"/>
+		<p>@Model.Content</p>
+		<hr class="border-2"/>
+		<h5 >Comments:</h5>
+		@if (@Model.Comments != null){
+			@foreach(var comment in Model.Comments){
+				<div class="border mb-3">
+					<a href="@Url.Action("Profile", "Home", new {id = comment.ApplicationUser.Id})" class="text-decoration-none">
+					<div>Commenter: @comment.ApplicationUser.Name</div>
+					</a>
+					<div>@comment.Content</div>
+				</div>
+			}
+		}
+		<button onclick="window.location.href='@Url.Action("Create", "Comments", new {id = Model.DiscussionId})'" class="mb-3 ms-auto">Add new comment</button>
+	</div>
+

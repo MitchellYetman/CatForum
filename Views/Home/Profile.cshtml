@@ -9,12 +9,42 @@
 <p>@Model.Location</p>
 
 @foreach (var discussion in @Model.Discussions){
-	<div class="border mb-3">
-		@* <a href="@Url.Action("Profile", "Home", new {id = discussion.ApplicationUser.Id})" class="text-decoration-none"> *@
-			@* <div>Commenter: @discussion.ApplicationUser.Name</div> *@
-		<a href="@Url.Action("GetDiscussion", "Home", new {id = discussion.DiscussionId})" class="text-decoration-none">
-			<h2>@discussion.Title</h2>
-		</a>
-		<div>@discussion.Content</div>
-	</div>
+    <div class="masonry-grid-item mb-4 mt-3 discussionCard d-flex">
+        <div class="w-75">
+            <a href="@Url.Action("GetDiscussion", "Home", new {id = discussion.DiscussionId})" class="text-decoration-none">
+                <h3>@discussion.Title</h3>
+            </a>
+            <div class="d-flex">
+                @if (@discussion.Comments != null)
+                {
+                    <div class="me-3"># of comments: @discussion.Comments.Count</div>
+                }
+                else
+                {
+                    <div class="me-3"># of comments: 0</div>
+                }
+                <div>Created at: @discussion.CreateDate</div>
+            </div>
+            @* <a href="@Url.Action("Profile", "Home", new {id = discussion.ApplicationUser.Id})" class="text-decoration-none"> *@
+            @*     <div>Thread owner: @discussion.ApplicationUser.Name</div> *@
+            @* </a> *@
+        </div>
+        @if (discussion.ImageFilename != "")
+        {
+            string imageUrl = Url.Content("/photos/" + discussion.ImageFilename);
+            <div class="ms-auto">
+                <img src="@imageUrl" class="img-fluid" height="75" width="105" alt="thumbnail for discussion with id @discussion.DiscussionId" />
+            </div>
+        }
+        else
+        {
+            <div class="ms-auto">
+                <img src="/photos/no_img_found.jpeg" class="img-fluid" width="105" height="75" alt="thumbnail for @discussion.DiscussionId" />
+            </div>
+        }
+
+
+    </div>
+
+    
 }
