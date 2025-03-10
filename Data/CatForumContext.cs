@@ -36,5 +36,8 @@ namespace CatForum.Data
 
         public DbSet<CatForum.Models.Discussion> Discussion { get; set; } = default!;
         public DbSet<CatForum.Models.Comment> Comment { get; set; } = default!;
+
+        public DbSet<CatForum.Data.ApplicationUser> Users {  get; set; } = default!;
+            
     }
 }

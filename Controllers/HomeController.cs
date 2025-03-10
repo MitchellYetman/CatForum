@@ -18,7 +18,7 @@ namespace CatForum.Controllers
         public async Task<IActionResult> Index()
         {
             //add orderby here and get rid of sort
-            var discussions = await _context.Discussion.Include(d => d.Comments).OrderByDescending(d => d.CreateDate).ToListAsync();
+            var discussions = await _context.Discussion.Include(d => d.Comments).Include(d => d.ApplicationUser).OrderByDescending(d => d.CreateDate).ToListAsync();
             return View(discussions);
         }
 
@@ -29,7 +29,7 @@ namespace CatForum.Controllers
 
         public async Task<IActionResult> GetDiscussion(int? id)
         {
-            var discussion = await _context.Discussion.Include(d => d.Comments).FirstOrDefaultAsync(d => d.DiscussionId == id);
+            var discussion = await _context.Discussion.Include(d => d.Comments).Include(d => d.ApplicationUser).FirstOrDefaultAsync(d => d.DiscussionId == id);
 
             if (discussion != null && discussion.Comments != null)
             {
@@ -37,6 +37,14 @@ namespace CatForum.Controllers
             }
 
             return View(discussion);
+        }
+
+        public async Task<IActionResult> GetUserProfile(string? id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+            return View(user);
+
         }
 
 

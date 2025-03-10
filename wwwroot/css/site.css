@@ -50,3 +50,9 @@ body {
     height: auto;
     border-radius: 50%;
 }
+
+.discussion-thumb {
+    width: 150px;
+    height: auto;
+    border-radius: 50%;
+}

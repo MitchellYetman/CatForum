@@ -4,6 +4,9 @@
 	string imageUrl = Url.Content("/photos/" + Model.ImageFilename);
 }
 
+<img src="/profile_img/@Model.ApplicationUser.ImageFilename" class="discussion-thumb" />
+<p>@Model.ApplicationUser.Name</p>
+
 <h2>@Model.Title</h2>
 <hr class="my-3" />
 <img src="@imageUrl" width="250" height="180" alt="alt for photo in discussion @Model.DiscussionId" class="mb-3"/>
@@ -12,7 +15,12 @@
 <h5 >Comments:</h5>
 @if (@Model.Comments != null){
 	@foreach(var comment in Model.Comments){
-		<div class="border mb-3">@comment.Content</div>
+		<div class="border mb-3">
+			<a href="@Url.Action("GetUserProfile", "Home", new {id = comment.ApplicationUser.Id})" class="text-decoration-none">
+			<div>Commenter: @comment.ApplicationUser.Name</div>
+			</a>
+			<div>@comment.Content</div>
+			</div>
 	}
 }
 <button onclick="window.location.href='@Url.Action("Create", "Comments", new {id = Model.DiscussionId})'" class="mb-3 ms-auto">Add new comment</button>
