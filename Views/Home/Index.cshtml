@@ -5,36 +5,39 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1 class="fw-bold">CatForum</h1>
-<button onclick="window.location.href='@Url.Action("Create", "Discussions")'" class="mb-1">Create new discussion</button>
+<h1 class="fw-bold">Welcome to CatForum!</h1>
+<hr class="mt-2 mb-3" />
+<button onclick="window.location.href='@Url.Action("Create", "Discussions")'" class="btn btn-primary mb-1">Create new discussion</button>
 
 <div class="masonry-grid">
     @foreach (var item in Model){
         <div class="masonry-grid-item mb-4 mt-3 discussionCard d-flex">
             <div class="w-75">
-                <a href="@Url.Action("GetDiscussion", "Home", new {id = item.DiscussionId})" class="text-decoration-none">
+                <a href="@Url.Action("GetDiscussion", "Home", new {id = item.DiscussionId})" class="text-decoration-none nav-link fw-bold">
                     <h3>@item.Title</h3>
                 </a>
+
+                <a href="@Url.Action("Profile", "Home", new {id = item.ApplicationUser.Id})" class="text-decoration-none nav-link fw-semibold mb-4 d-flex">
+                    @if (item.ApplicationUser.ImageFilename != null)
+                    {
+                        <img src="/profile_img/@item.ApplicationUser.ImageFilename" class="comment-thumbnail me-2"/>
+                    }
+                    <div>@item.ApplicationUser.Name</div>
+                </a>
+                
                 <div class="d-flex">
                     @if(@item.Comments != null){
-                        <div class="me-3"># of comments: @item.Comments.Count</div>
+                        <div class="me-5"><i class="fa-regular fa-comment"></i> @item.Comments.Count</div>
                     }else{
-                        <div class="me-3"># of comments: 0</div>
+                        <div class="me-5"><i class="fa-regular fa-comment"></i> 0</div>
                     }
-                    <div>Created at: @item.CreateDate</div>
+                    <div><i class="fa-regular fa-calendar"></i> @item.CreateDate.ToString("dd/MM/yyyy")</div>
                 </div>
-                <a href="@Url.Action("Profile", "Home", new {id = item.ApplicationUser.Id})" class="text-decoration-none">
-                <div>Thread owner: @item.ApplicationUser.Name</div>
-                </a>
             </div>
-            @if(item.ImageFilename != ""){
+            @if(item.ImageFilename != null){
                 string imageUrl = Url.Content("/photos/" + item.ImageFilename);
                 <div class="ms-auto">
-                    <img src="@imageUrl" class="img-fluid" height="75" width="105" alt="thumbnail for discussion with id @item.DiscussionId" />
-                </div>
-            }else{
-                <div class="ms-auto">
-                    <img src="/photos/no_img_found.jpeg" class="img-fluid" width="105" height="75" alt="thumbnail for @item.DiscussionId" />
+                    <img src="@imageUrl" height="93" width="125" alt="thumbnail for discussion with id @item.DiscussionId" />
                 </div>
             }
            

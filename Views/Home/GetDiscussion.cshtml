@@ -4,30 +4,38 @@
 	string imageUrl = Url.Content("/photos/" + Model.ImageFilename);
 }
 
-	<a href="@Url.Action("Profile", "Home", new {id = Model.ApplicationUser.Id})" class="text-decoration-none">
-		<div class="d-flex align-items-center">
-			<img src="/profile_img/@Model.ApplicationUser.ImageFilename" class="profile-details-thumb" />
-			<p>@Model.ApplicationUser.Name</p>
-		</div>
-	</a>
+<a href="@Url.Action("Profile", "Home", new {id = Model.ApplicationUser.Id})" class="text-decoration-none mb-2 fw-semibold nav-link">
+	<div class="d-flex align-items-center">
+		<img src="/profile_img/@Model.ApplicationUser.ImageFilename" class="thumbnail me-2"/>
+		<div>@Model.ApplicationUser.Name</div>
+	</div>
+</a>
 
-	<div class="ms-5 ps-5">
-		<h2>@Model.Title</h2>
-		<hr class="my-3" />
-		<img src="@imageUrl" width="250" height="180" alt="alt for photo in discussion @Model.DiscussionId" class="mb-3"/>
-		<p>@Model.Content</p>
-		<hr class="border-2"/>
-		<h5 >Comments:</h5>
+<div >
+	<h2>@Model.Title</h2>
+	<hr class="my-3" />
+	<p>@Model.Content</p>
+	@if (Model.ImageFilename != null)
+	{
+		<img src="@imageUrl
+		" width="500" height="auto" alt="alt for photo in discussion @Model.DiscussionId
+		" class="mt-3"/>
+	}
+	<hr class="border-2"/>
+		<h5 class="mb-3">Comments:</h5>
 		@if (@Model.Comments != null){
 			@foreach(var comment in Model.Comments){
-				<div class="border mb-3">
-					<a href="@Url.Action("Profile", "Home", new {id = comment.ApplicationUser.Id})" class="text-decoration-none">
-					<div>Commenter: @comment.ApplicationUser.Name</div>
+				<div class="border-bottom mb-3">
+					<div>
+					<a href="@Url.Action("Profile", "Home", new {id = comment.ApplicationUser.Id})" class="text-decoration-none fw-bold nav-link d-flex align-items-center">
+						<img src="/profile_img/@comment.ApplicationUser.ImageFilename" class="comment-thumbnail me-2" />
+						<div>@comment.ApplicationUser.Name</div>
 					</a>
-					<div>@comment.Content</div>
+						<div class="ms-4 ps-3 mb-3">@comment.Content</div>
+				</div>
 				</div>
 			}
 		}
-		<button onclick="window.location.href='@Url.Action("Create", "Comments", new {id = Model.DiscussionId})'" class="mb-3 ms-auto">Add new comment</button>
+		<button onclick="window.location.href='@Url.Action("Create", "Comments", new {id = Model.DiscussionId})'" class="mb-3 ms-auto btn btn-primary">Add new comment</button>
 	</div>
 

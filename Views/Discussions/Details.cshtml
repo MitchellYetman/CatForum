@@ -5,12 +5,15 @@
     string imageUrl = Url.Content("/photos/" + Model.ImageFilename);
 }
 
-<h1>Details</h1>
+<h1>Discussion Details</h1>
 
 <div>
-    <h4>Discussion</h4>
     <hr />
-    <img src="@imageUrl" width="200" height="150" alt="thumbnai for discussion @Model.DiscussionId" />
+    @if(Model.ImageFilename != null){
+        <img src="@imageUrl" width="200" height="150" alt="thumbnai for discussion @Model.DiscussionId" class="mb-3"/>
+    }else{
+        <img src="/photos/no_img_found.jpeg" width="200" height="150" alt="thumbnail for @Model.DiscussionId" class="mb-3" />
+    }
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
@@ -24,12 +27,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Content)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageFilename)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageFilename)
-        </dd>
+        @* <dt class = "col-sm-2"> *@
+        @*     @Html.DisplayNameFor(model => model.ImageFilename) *@
+        @* </dt> *@
+        @* <dd class = "col-sm-10"> *@
+        @*     @Html.DisplayFor(model => model.ImageFilename) *@
+        @* </dd> *@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CreateDate)
         </dt>

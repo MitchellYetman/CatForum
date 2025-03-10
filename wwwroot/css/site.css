@@ -41,7 +41,7 @@ body {
 
 .thumbnail {
     width: 50px;
-    height: auto;
+    height: 40px;
     border-radius: 50%;
 }
 
@@ -60,5 +60,17 @@ body {
 .discussion-thumb {
     width: 150px;
     height: auto;
+    border-radius: 50%;
+}
+
+.comment-thumbnail {
+    width: 30px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+.brand-thumbnail {
+    width: 100px;
+    height: 75px;
     border-radius: 50%;
 }

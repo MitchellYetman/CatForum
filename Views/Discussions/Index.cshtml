@@ -11,10 +11,9 @@
     var user = await UserManager.GetUserAsync(User);
 }
 
-<h1>Index</h1>
+<h1>My Threads</h1>
 
-<button asp-action="Create" class="btn btn-primary">Create new discussion</button>
-
+<button onclick="window.location.href='@Url.Action("Create", "Discussions")'" class="btn btn-primary mb-1">Create new discussion</button>
 
 @if(user.Discussions != null){
 <table class="table">
@@ -39,29 +38,33 @@
 @foreach (var item in Model) {
     if (item.ApplicationUserId == UserManager.GetUserId(User)){            
         <tr>
-        @if(item.ImageFilename != ""){
+        @if(item.ImageFilename != null){
             string imageUrl = Url.Content("/photos/" + item.ImageFilename);
          <td>
-            <img src="@imageUrl" width="80" height="55" alt="thumbnail for @item.DiscussionId" />
+            <img src="@imageUrl" width="80" height="60" alt="thumbnail for @item.DiscussionId" />
         </td>
         }else{
             <td>
-                <img src="/photos/no_img_found.jpeg" width="80" height="55" alt="thumbnail for @item.DiscussionId" />
+                <img src="/photos/no_img_found.jpeg" width="80" height="60" alt="thumbnail for @item.DiscussionId" />
             </td>
         }
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
+            <td class="w-50">    
+                <div style="max-height:65px; overflow-y: auto; overflow-x: hidden;">
+                     @Html.DisplayFor(modelItem => item.Content)              
+                 </div>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreateDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.DiscussionId" class="me-2">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DiscussionId" class="ms-2 me-2">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DiscussionId" class="ms-2">Delete</a> 
+                <div class="d-flex">
+                     <a asp-action="Edit" asp-route-id="@item.DiscussionId" class="me-3 nav-link" ><i class="fa-regular fa-pen-to-square"></i></a>
+                     <a asp-action="Delete" asp-route-id="@item.DiscussionId" class="me-3" style="color: red"><i class="bi bi-trash"></i></a>
+                     <a asp-action="Details" asp-route-id="@item.DiscussionId"><i class="bi bi-info-circle"></i></a>
+                </div>
             </td>
         </tr>
         }
